@@ -122,7 +122,7 @@ tweet_corpus <- Corpus(VectorSource(word.df))
 # create term document matrix applying some transformations
 tdm <- TermDocumentMatrix(tweet_corpus,
                           control = list(removeNumbers = TRUE, wordLengths=c(5, 15),
-                                         stopwords = c("Green", "green", "Party", "party", "government", "Government", "tweet", stopwords("english")),
+                                         stopwords = c("Green", "green", "greens", "Party", "party", "government", "Government", "tweet", stopwords("english")),
                                          removeNumbers = TRUE, tolower = TRUE))
 
 # define tdm as matrix so we can calculate word frequencies
@@ -134,7 +134,7 @@ word_freqs <- sort(rowSums(tdm.matrix), decreasing=TRUE)
 # create a data frame with words and their frequencies
 dm <- data.frame(word=names(word_freqs), freq=word_freqs)
 
-# plot wordcloud with words that appear at least 10 times
+# plot wordcloud with maximum of 50 words, excluding stopwords
 wordcloud(dm$word, dm$freq, min.freq = 10, max.words = 50,
           random.order=FALSE, colors=brewer.pal(8, "Dark2"))
 
