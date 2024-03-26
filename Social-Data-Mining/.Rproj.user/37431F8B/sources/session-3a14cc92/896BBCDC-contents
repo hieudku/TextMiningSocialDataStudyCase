@@ -1,0 +1,102 @@
+# Text Mining Tutorial - Obama Speech Exercise
+
+# Invoke required libraries
+
+library(tm)
+library(wordcloud)
+library(RColorBrewer)
+#Check current working directory
+getwd()
+#set Path for your working directory
+dir_path<- "C:\\OneDrive\\abubakar.siddique\\OneDrive - Whitireia and WelTec\\WelTec\\2024\\T1\\DS6501\\Lects\\Lect03\\TextMiningTutorial"
+
+setwd(dir_path)
+
+# Create Corpus from text files contained in obama folder
+docs <- Corpus(DirSource("Obama"))
+
+#######################
+#Info about the docs
+# View summary of the corpus
+#summary(docs)
+
+# View the structure of the corpus
+#str(docs)
+
+# Get a list of documents in the corpus
+#names(docs)
+
+# Access the content of a specific document
+docs[[1]]$content
+
+##########################
+toSpace <- content_transformer(function(x, pattern) {return (gsub(pattern, " ", x))})
+remvPattern <- content_transformer(function(x, pattern) {return (gsub(pattern, "", x))})
+
+# Now we can use this content transformer to eliminate colons and hyphens 
+docs <- tm_map(docs, toSpace, "-")
+docs <- tm_map(docs, remvPattern, "http\\S+")
+docs[[1]]$content
+
+
+###############################
+
+
+# Remove punctuation - replace punctuation marks with a space
+docs <- tm_map(docs, removePunctuation)
+
+#Transform to lower case (need to wrap in content_transformer)
+docs <- tm_map(docs,content_transformer(tolower))
+
+#Strip digits (std transformation - no need for content_transformer)
+docs <- tm_map(docs, removeNumbers)
+
+#remove stopwords using the standard list in tm
+docs <- tm_map(docs, removeWords, stopwords("english"))
+
+#Strip whitespace 
+docs <- tm_map(docs, stripWhitespace)
+
+#######################
+#Info about the docs
+# View summary of the corpus
+#summary(docs)
+
+# View the structure of the corpus
+#str(docs)
+
+# Get a list of documents in the corpus
+#names(docs)
+
+# Access the content of a specific document
+docs[[1]]$content
+
+#######################
+
+
+# Create a DTM
+# Remove words that are not between 5 and 20 characters in length
+
+dtmr <-DocumentTermMatrix(docs, control=list(wordLengths=c(5, 20)))
+
+# Calculate the most frequently occurring terms in the new corpus
+freqr <- colSums(as.matrix(dtmr))
+
+#create sort order (asc)
+ordr <- order(freqr,decreasing=TRUE)
+
+#inspect most frequently occurring terms
+freqr[head(ordr)]
+
+#inspect least frequently occurring terms
+freqr[tail(ordr)]
+
+# Find terms that occur at least 10 times in the corpus
+findFreqTerms(dtmr,lowfreq=10)
+
+# Use a colour palette to improve the visualisation
+wordcloud(names(freqr),freqr, min.freq=15, random.order=FALSE, colors=brewer.pal(6,"Dark2"))
+
+# Based on this analysis, the main focus of the speech was America, 
+# its econonmy and the health of its people
+
