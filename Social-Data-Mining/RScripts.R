@@ -1,5 +1,6 @@
 getwd()
-
+dir_path <- "C:\\Users\\hieu.cu_it.weltec\\OneDrive - Whitireia and WelTec\\Social-Data\\Assignment1\\DS6501-Assignment1-TextMiningSocialData\\Social-Data-Mining"
+setwd(dir_path)
 # Install packages into R Studio
 install.packages("SnowballC")
 install.packages("tm")
@@ -26,12 +27,12 @@ str(docs)
 names(docs)
 
 ##########################
-toSpace <- content_transformer(function(x, pattern) {return (gsub(pattern, " ", x))})
-remvPattern <- content_transformer(function(x, pattern) {return (gsub(pattern, "", x))})
+tweets_Green.df2 <- content_transformer(function(x, pattern) {return (gsub(pattern, " ", x))})
+tweets_Green.df2 <- content_transformer(function(x, pattern) {return (gsub(pattern, "", x))})
 
 # Now we can use this content transformer to eliminate colons and hyphens 
-docs <- tm_map(docs, toSpace, "-")
-docs <- tm_map(docs, remvPattern, "http\\S+")
+docs <- tm_map(docs, tweets_Green.df2, "-")
+docs <- tm_map(docs, tweets_Green.df2, "http\\S+")
 docs[[1]]$content
 
 
@@ -92,10 +93,10 @@ head(tweets_Green.df2)
 head(tweets_National.df2)
 head(tweets_Labour.df2)
 # Use a 'find and replace' function to remove garbage from tweets
-
 tweets_Green.df2 <- gsub("http.*","",tweets_Green.df2)
 tweets_National.df2 <- gsub("http.*","",tweets_National.df2)
 tweets_Labour.df2 <- gsub("http.*","",tweets_Labour.df2)
+
 # The '.* means it will remove all text to the right of the pattern
 # found - http in the example above. This would clear the whole tweet
 # if it begin with this pattern, so be careful.
@@ -110,11 +111,11 @@ tweets_Green.df2 <- gsub("[\\]+","",tweets_Green.df2)
 tweets_National.df2 <- gsub("[\\]+","",tweets_National.df2)
 tweets_Labour.df2 <- gsub("[\\]+","",tweets_Labour.df2)
 
-tweets.df2 <- gsub("#.*","",tweets.df2)
+tweets_Green.df2 <- gsub("#.*","",tweets_Green.df2)
 # Display clean text
-#head(tweets.df2)
+head(tweets.df2)
 
-tweets.df2 <- gsub("@.*","",tweets.df2) # Donald tweets
+tweets_Green.df2 <- gsub("@.*","",tweets_Green.df2)
 tweets.df2 <- gsub("…","",tweets.df2)
 #tweets.df2 <- gsub("@","",tweets.df2) # Airline tweets
 
