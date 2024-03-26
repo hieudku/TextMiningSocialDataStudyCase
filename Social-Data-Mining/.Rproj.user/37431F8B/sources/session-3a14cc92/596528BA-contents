@@ -11,3 +11,7 @@ library(SnowballC)
 library(tm)
 library(syuzhet)
 library(wordcloud)
+
+tweets_Green.df <- read.csv("./Political Parties/NZGreens_tweets.csv")
+tweets_National.df <- read.csv("./Political Parties/NZNationalParty_tweets.csv")
+tweets_Labour.df <- read.csv("./Political Parties/nzlabour_tweets.csv")
