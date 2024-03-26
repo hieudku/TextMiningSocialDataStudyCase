@@ -16,7 +16,8 @@ install.packages("syuzhet")
 install.packages("wordcloud")
 
 
-############################################################
+####################### Pre-processing tweets ###########################
+
 # Import tweets
 tweets_Green.df <- read.csv("./Political Parties/NZGreens_tweets.csv")
 tweets_National.df <- read.csv("./Political Parties/NZNationalParty_tweets.csv")
@@ -32,35 +33,20 @@ head(tweets_Green.df$text)
 head(tweets_National.df$text)
 head(tweets_Labour.df$text)
 
-clean_tweet <- function(tweet) {
-  # Convert text to UTF-8 encoding
-  tweet <- iconv(tweet, "UTF-8", "UTF-8", sub = "byte")
+# Convert text to UTF-8 encoding
+tweets_Green.df$text <- iconv(tweets_Green.df$text, "UTF-8", "UTF-8", sub = "byte")
+tweets_National.df$text <- iconv(tweets_National.df$text, "UTF-8", "UTF-8", sub = "byte")
+tweets_Labour.df$text <- iconv(tweets_Labour.df$text, "UTF-8", "UTF-8", sub = "byte")
   
-  # Remove URLs
-  tweet <- gsub("http\\S+|www\\.[^\\s]+", "", tweet)
-  
-  # Remove hashtags
-  tweet <- gsub("#\\S+", " ", tweet)
-  
-  # Remove Twitter handles
-  tweet <- gsub("@\\S+", " ", tweet)
-  
-  # Remove control codes and punctuation
-  tweet <- gsub("[[:punct:]]", " ", tweet)
-  
-  # Remove any non-alphabetic characters (except space)
-  tweet <- gsub("[^a-zA-Z\\s]", " ", tweet)
-  
-  # Remove extra whitespaces
-  tweet <- gsub("\\s+", " ", tweet)
-  
-  return(tweet)
-}
+# Remove URLs, Twitter handles, hashtags, and anything inside <>
+tweets_Green.df$text <- gsub("http\\S+|www\\.[^\\s]+|@\\S+|#\\S+|<[^>]+>", "", tweets_Green.df$text)
+tweets_National.df$text <- gsub("http\\S+|www\\.[^\\s]+|@\\S+|#\\S+|<[^>]+>", "", tweets_National.df$text)
+tweets_Labour.df$text <- gsub("http\\S+|www\\.[^\\s]+|@\\S+|#\\S+|<[^>]+>", "", tweets_Labour.df$text)
 
-# Now you can use clean_tweet to clean your tweets
-tweets_Green.df$text <- sapply(tweets_Green.df$text , clean_tweet)
-tweets_National.df$text <- sapply(tweets_National.df$text, clean_tweet)
-tweets_Labour.df$text <- sapply(tweets_Labour.df$text, clean_tweet)
+# Remove control codes, punctuation, and any non-alphabetic characters (except space)
+tweets_Green.df$text <- gsub("[[:cntrl:]]|[[:punct:]]|[^a-zA-Z0-9\\s]", " ", tweets_Green.df$text)
+tweets_National.df$text <- gsub("[[:cntrl:]]|[[:punct:]]|[^a-zA-Z0-9\\s]", " ", tweets_National.df$text)
+tweets_Labour.df$text <- gsub("[[:cntrl:]]|[[:punct:]]|[^a-zA-Z0-9\\s]", " ", tweets_Labour.df$text)
 
 # Display cleaned tweets
 head(tweets_Green.df$text)
@@ -75,5 +61,5 @@ head(tweets_Green.df2)
 head(tweets_National.df2)
 head(tweets_Labour.df2)
 
-######### Construct words corpus ###########################
+####################### Construct words corpus ###########################
 
