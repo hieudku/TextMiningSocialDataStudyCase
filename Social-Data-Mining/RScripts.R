@@ -133,6 +133,7 @@ dm_Labour <- data.frame(word=names(word_freqs_Labour), freq=word_freqs_Labour)
 wordcloud(dm_Labour$word, dm_Labour$freq, min.freq = 10, max.words = 50,
           random.order=FALSE, colors=brewer.pal(8, "Dark2"))
 
+
 #######################################################################
 ####################### National Party ################################
 
@@ -203,7 +204,6 @@ dm_National <- data.frame(word=names(word_freqs_National), freq=word_freqs_Natio
 # plot wordcloud with maximum of 50 words, excluding stopwords
 wordcloud(dm_National$word, dm_National$freq, min.freq = 2, max.words = 50,
           random.order=FALSE, colors=brewer.pal(8, "Dark2"))
-
 
 
 #######################################################################
