@@ -1,4 +1,4 @@
-# DS6501-Assignment1-TextMiningSocialData
+# TextMiningSocialData
 
 Purpose
 This assignment is designed to enhance my skills in pre-processing and analysing social data.
