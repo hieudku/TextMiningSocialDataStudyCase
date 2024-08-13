@@ -1,7 +1,7 @@
 # TextMiningSocialData
 
 Purpose
-This assignment is designed to enhance my skills in pre-processing and analysing social data.
+This project is designed to enhance my skills in pre-processing and analysing social data.
 The tasks involves pre-processing and analysing tweets obtained from three Twitter accounts.
 The analysis encompasses scoring tweets for sentiment, constructing a word corpus, generating
 a Term Document Matrix, plotting a Word Cloud, and creating an appropriate visual
