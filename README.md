@@ -13,3 +13,21 @@ accounts utilizing RStudio.
 
 Topic:
 Political Parties (Labour, National, and the Greens)
+
+## Requirement: 
+- R Studio
+## Libraries
+- library(SnowballC)
+- library(tm)
+- library(syuzhet)
+- library(wordcloud)
+- library(RColorBrewer)
+
+## Packages
+- install.packages("SnowballC")
+- install.packages("tm")
+- install.packages("syuzhet")
+- install.packages("wordcloud")
+
+## File path: 
+- dir_path <- "your local file path here"
